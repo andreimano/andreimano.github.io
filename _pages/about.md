@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: <a href='https://imprs.is.mpg.de/'>IMPRS-IS</a> and <a href='https://ellis.eu/'>ELLIS</a> PhD Student. ML Researcher at <a href='#'>Bitdefender</a>. Interested in robust & trustworthy Geometric Deep Learning. 🇷🇴 ➡️ 🇩🇪
+subtitle: <a href='https://imprs.is.mpg.de/'>IMPRS-IS</a> and <a href='https://ellis.eu/'>ELLIS</a> PhD Student. ML Researcher at <a href='https://bit-ml.github.io/'>Bitdefender</a>. Interested in robust & trustworthy Geometric Deep Learning. 🇷🇴 ➡️ 🇩🇪
 
 profile:
   align: right
