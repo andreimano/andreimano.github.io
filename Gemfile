@@ -22,4 +22,4 @@ group :other_plugins do
     gem 'feedjira'
 end
 
-gem 'uri', '~> 0.10.1'          # ← add this line anywhere outside a group
+gem 'uri', '= 0.10.1'
