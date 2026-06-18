@@ -1,7 +1,7 @@
 const buttons = document.querySelectorAll("[data-set-theme]");
-const systemLight = window.matchMedia ? window.matchMedia("(prefers-color-scheme: light)") : null;
 const themes = new Set([
   "default",
+  "defaultDark",
   "defaultLight",
   "solarized",
   "seriousAcademic",
@@ -12,7 +12,6 @@ const themes = new Set([
 const requestedTheme = new URLSearchParams(window.location.search).get("theme");
 
 let savedTheme = null;
-let followsSystem = false;
 
 try {
   savedTheme = localStorage.getItem("andrei-theme");
@@ -20,13 +19,7 @@ try {
   savedTheme = null;
 }
 
-const getSystemTheme = () => (systemLight?.matches ? "defaultLight" : "default");
-
 const setTheme = (theme, options = {}) => {
-  if (options.persist) {
-    followsSystem = false;
-  }
-
   document.body.dataset.theme = theme;
 
   if (options.persist) {
@@ -51,18 +44,5 @@ if (requestedTheme && themes.has(requestedTheme)) {
 } else if (savedTheme && themes.has(savedTheme)) {
   setTheme(savedTheme);
 } else {
-  followsSystem = true;
-  setTheme(getSystemTheme());
-
-  const syncSystemTheme = () => {
-    if (followsSystem) {
-      setTheme(getSystemTheme());
-    }
-  };
-
-  if (systemLight?.addEventListener) {
-    systemLight.addEventListener("change", syncSystemTheme);
-  } else if (systemLight?.addListener) {
-    systemLight.addListener(syncSystemTheme);
-  }
+  setTheme("default");
 }
