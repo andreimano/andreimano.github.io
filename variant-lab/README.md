@@ -1,8 +1,8 @@
 # Variant Lab
 
-`/` and `/variant-lab/` both render the same homepage content through
-`_includes/variant_home.html`. Update news, papers, links, and copy there once;
-every visual theme uses the same markup.
+`/` and `/variant-lab/` are both static HTML pages with matching content.
+When changing news, papers, links, or copy, keep `index.html` and
+`variant-lab/index.html` in sync.
 
 It includes the default dark layout plus five alternate visual directions:
 
