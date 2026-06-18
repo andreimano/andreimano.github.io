@@ -1,6 +1,6 @@
 # andreimano.github.io
 
-Static personal website for Andrei Manolache.
+Static personal website.
 
 The current `master` branch is intentionally lightweight: plain HTML, CSS, and
 JavaScript with no Jekyll build step.
