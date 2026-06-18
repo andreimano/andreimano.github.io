@@ -1,7 +1,7 @@
 ---
 layout: about
 title: about
-permalink: /
+permalink: /old/
 subtitle: <a href='https://imprs.is.mpg.de/'>IMPRS-IS</a> and <a href='https://ellis.eu/'>ELLIS</a> PhD Student. ML Researcher at <a href='https://bit-ml.github.io/'>Bitdefender</a>. Interested in how deep learning models acquire useful inductive biases, especially equivariance, and how we can control them reliably. 🇷🇴 ➡️ 🇩🇪
 
 profile:
@@ -18,4 +18,4 @@ Hi there 👋! I'm Andrei, I am currently a Ph.D. candidate at the <a href='http
 
 I've served as a reviewer for EMNLP 2022, ICML 2022/2023/2024/2026, NeurIPS 2022/2023/2024/2025. I got a Best Reviewer award for NeurIPS 2022, 2023 and 2024, and was named a Gold Reviewer at ICML 2026.
 
-My Ph.D. research focuses on the design and development of Geometric Deep Learning methods where the robustness and trustworthiness of such models are an integral part of the research. My Master's thesis involved deep anomaly detection in text (<a href='https://raw.githubusercontent.com/andreimano/andreimano.github.io/master/msc_thesis_manolache.pdf'>full thesis</a>). 
+My Ph.D. research focuses on the design and development of Geometric Deep Learning methods where the robustness and trustworthiness of such models are an integral part of the research. My Master's thesis involved deep anomaly detection in text (<a href='{{ "/msc_thesis_manolache.pdf" | relative_url }}'>full thesis</a>).
