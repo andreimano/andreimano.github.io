@@ -3,19 +3,31 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="refresh" content="3; url=/">
     <title>Page not found - Andrei Manolache</title>
-    <link rel="stylesheet" href="/variant-lab/styles.css">
+    <meta name="description" content="The requested page could not be found.">
+    <link rel="stylesheet" href="/resources/css/styles.css">
   </head>
   <body data-theme="default">
-    <main class="site-shell">
-      <section class="window">
-        <div class="window-title">404.txt</div>
-        <div class="window-body prose">
-          <p>This page is not here anymore.</p>
-          <p><a href="/">Go back home</a>.</p>
+    <main class="site-shell not-found-page">
+      <section class="window not-found-window">
+        <div class="window-title">lost-page.log</div>
+        <div class="window-body prose not-found-body">
+          <p class="error-code">404</p>
+          <h1>this page wandered off</h1>
+          <p>
+            The route you asked for is not in the current directory. It may have
+            been renamed during the static-site cleanup, or it may just be doing
+            very tiny unsupervised exploration.
+          </p>
+          <div class="lost-terminal" aria-label="Navigation options">
+            <span>$ cd /</span>
+            <a href="/">open homepage</a>
+            <a href="/#publications">jump to publications</a>
+            <a href="/#news">read recent news</a>
+          </div>
         </div>
       </section>
     </main>
+    <script src="/resources/js/theme-picker.js"></script>
   </body>
 </html>
