@@ -1,4 +1,5 @@
 const buttons = document.querySelectorAll("[data-set-theme]");
+const systemLight = window.matchMedia ? window.matchMedia("(prefers-color-scheme: light)") : null;
 const themes = new Set([
   "default",
   "defaultLight",
@@ -8,9 +9,10 @@ const themes = new Set([
   "peak2000",
   ...Array.from(buttons, (button) => button.dataset.setTheme),
 ]);
-const requestedTheme = new URLSearchParams(window.location.search).get("theme") || "default";
+const requestedTheme = new URLSearchParams(window.location.search).get("theme");
 
 let savedTheme = null;
+let followsSystem = false;
 
 try {
   savedTheme = localStorage.getItem("andrei-theme");
@@ -18,13 +20,21 @@ try {
   savedTheme = null;
 }
 
-const setTheme = (theme) => {
+const getSystemTheme = () => (systemLight?.matches ? "defaultLight" : "default");
+
+const setTheme = (theme, options = {}) => {
+  if (options.persist) {
+    followsSystem = false;
+  }
+
   document.body.dataset.theme = theme;
 
-  try {
-    localStorage.setItem("andrei-theme", theme);
-  } catch (error) {
-    // The picker still works for the current page even when storage is unavailable.
+  if (options.persist) {
+    try {
+      localStorage.setItem("andrei-theme", theme);
+    } catch (error) {
+      // The picker still works for the current page even when storage is unavailable.
+    }
   }
 
   buttons.forEach((button) => {
@@ -33,11 +43,26 @@ const setTheme = (theme) => {
 };
 
 buttons.forEach((button) => {
-  button.addEventListener("click", () => setTheme(button.dataset.setTheme));
+  button.addEventListener("click", () => setTheme(button.dataset.setTheme, { persist: true }));
 });
 
 if (requestedTheme && themes.has(requestedTheme)) {
-  setTheme(requestedTheme);
+  setTheme(requestedTheme, { persist: true });
 } else if (savedTheme && themes.has(savedTheme)) {
   setTheme(savedTheme);
+} else {
+  followsSystem = true;
+  setTheme(getSystemTheme());
+
+  const syncSystemTheme = () => {
+    if (followsSystem) {
+      setTheme(getSystemTheme());
+    }
+  };
+
+  if (systemLight?.addEventListener) {
+    systemLight.addEventListener("change", syncSystemTheme);
+  } else if (systemLight?.addListener) {
+    systemLight.addListener(syncSystemTheme);
+  }
 }

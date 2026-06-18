@@ -12,5 +12,6 @@ JavaScript with no Jekyll build step.
 - `resources/css/styles.css` - site styles and theme variants.
 - `resources/js/theme-picker.js` - theme switcher.
 - `resources/img/prof_pic.jpg` - profile photo.
+- `resources/img/favicon.svg` - site favicon.
 - `resources/files/Manolache_Andrei_CV2025.pdf` - current CV.
 - `resources/files/msc_thesis_manolache.pdf` - master's thesis PDF.
