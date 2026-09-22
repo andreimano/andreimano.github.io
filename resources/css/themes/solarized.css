@@ -1,0 +1,450 @@
+/* ==========================================================================
+   solarized: the homepage as a terminal session (Solarized dark).
+   Prompts, the neofetch header and the tmux clock come from
+   js/themes/solarized.js; the theme picker becomes tmux's window list.
+   ========================================================================== */
+
+[data-look="solarized"] {
+  --sz-base03: #002b36;
+  --sz-base02: #073642;
+  --sz-base01: #586e75;
+  --sz-base0: #839496;
+  --sz-base1: #93a1a1;
+  --sz-base2: #eee8d5;
+  --sz-yellow: #b58900;
+  --sz-orange: #cb4b16;
+  --sz-red: #dc322f;
+  --sz-magenta: #d33682;
+  --sz-violet: #6c71c4;
+  --sz-blue: #268bd2;
+  --sz-cyan: #2aa198;
+  --sz-green: #859900;
+  --sz-mono: ui-monospace, "SF Mono", "JetBrains Mono", Menlo, Consolas, "DejaVu Sans Mono", monospace;
+  --sz-size: 14.5px;
+
+  color-scheme: dark;
+  background: var(--sz-base03);
+}
+
+[data-look="solarized"] body {
+  color: var(--sz-base0);
+  font: var(--sz-size)/1.6 var(--sz-mono);
+}
+
+[data-look="solarized"] a {
+  color: var(--sz-blue);
+  text-decoration: underline;
+  text-decoration-color: rgba(38, 139, 210, 0.45);
+  text-underline-offset: 3px;
+}
+
+[data-look="solarized"] a:hover {
+  background: var(--sz-base02);
+  color: var(--sz-cyan);
+}
+
+[data-look="solarized"] ::selection {
+  background: var(--sz-base01);
+  color: var(--sz-base2);
+}
+
+[data-look="solarized"] :focus-visible {
+  outline: 1px solid var(--sz-yellow);
+  outline-offset: 2px;
+}
+
+[data-look="solarized"] .page {
+  max-width: 92ch;
+  margin: 0 auto;
+  padding: 26px 24px 64px;
+}
+
+/* Prompts ------------------------------------------------------------------ */
+
+[data-look="solarized"] .sz-prompt {
+  margin: 30px 0 10px;
+  color: var(--sz-base1);
+  overflow-wrap: anywhere;
+}
+
+[data-look="solarized"] .themes + .sz-prompt {
+  margin-top: 0;
+}
+
+[data-look="solarized"] .sz-user {
+  color: var(--sz-green);
+  font-weight: 700;
+}
+
+[data-look="solarized"] .sz-path {
+  color: var(--sz-blue);
+  font-weight: 700;
+}
+
+[data-look="solarized"] .sz-command {
+  color: var(--sz-base2);
+}
+
+[data-look="solarized"] .sz-cursor {
+  display: inline-block;
+  width: 0.62em;
+  background: var(--sz-base1);
+  animation: sz-blink 1.1s steps(1) infinite;
+}
+
+/* neofetch ------------------------------------------------------------------ */
+
+[data-look="solarized"] .masthead {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0 30px;
+  align-items: start;
+}
+
+[data-look="solarized"] .portrait {
+  display: none;
+}
+
+[data-look="solarized"] .sz-ascii {
+  margin: 0;
+  background: linear-gradient(var(--sz-cyan), var(--sz-blue) 70%, var(--sz-violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font: 9px/1 var(--sz-mono);
+  letter-spacing: 0;
+  user-select: none;
+}
+
+[data-look="solarized"] .intro {
+  min-width: 0;
+}
+
+[data-look="solarized"] .name {
+  margin: 0;
+  color: var(--sz-yellow);
+  font-size: 1em;
+  font-weight: 700;
+}
+
+[data-look="solarized"] .name::after {
+  content: "────────────────";
+  display: block;
+  color: var(--sz-base01);
+  font-weight: 400;
+}
+
+[data-look="solarized"] .role,
+[data-look="solarized"] .tagline,
+[data-look="solarized"] .contact {
+  margin: 0;
+}
+
+[data-look="solarized"] .role::before,
+[data-look="solarized"] .tagline::before,
+[data-look="solarized"] .contact::before,
+[data-look="solarized"] .sz-facts dt {
+  color: var(--sz-yellow);
+  font-weight: 700;
+}
+
+[data-look="solarized"] .role::before {
+  content: "role: ";
+}
+
+[data-look="solarized"] .tagline::before {
+  content: "interests: ";
+}
+
+[data-look="solarized"] .contact::before {
+  content: "links:";
+  margin-right: 1ch;
+}
+
+[data-look="solarized"] .role a {
+  color: inherit;
+}
+
+[data-look="solarized"] .contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.5ch;
+  padding: 0;
+  list-style: none;
+}
+
+[data-look="solarized"] .sz-facts {
+  display: grid;
+  grid-template-columns: max-content minmax(0, 1fr);
+  gap: 0 1ch;
+  margin: 0;
+}
+
+[data-look="solarized"] .sz-facts dt::after {
+  content: ":";
+}
+
+[data-look="solarized"] .sz-facts dd {
+  margin: 0;
+}
+
+[data-look="solarized"] .sz-swatches {
+  display: flex;
+  margin: 10px 0 0;
+}
+
+[data-look="solarized"] .sz-swatches span {
+  width: 3ch;
+  height: 1.2em;
+}
+
+/* Sections ("cat"ed files) ----------------------------------------------------- */
+
+[data-look="solarized"] .section h2 {
+  margin: 0 0 8px;
+  color: var(--sz-orange);
+  font-size: 1em;
+  font-weight: 700;
+}
+
+[data-look="solarized"] .section h2::before {
+  content: "# ";
+}
+
+[data-look="solarized"] .section-note {
+  margin: 0 0 8px;
+  color: var(--sz-base01);
+}
+
+[data-look="solarized"] .section-note::before {
+  content: "// ";
+}
+
+[data-look="solarized"] .prose p {
+  margin: 0 0 1em;
+}
+
+[data-look="solarized"] .prose p:last-child {
+  margin-bottom: 0;
+}
+
+[data-look="solarized"] .news {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+[data-look="solarized"] .news li {
+  display: grid;
+  grid-template-columns: 13ch minmax(0, 1fr);
+  gap: 0 1ch;
+  margin-bottom: 4px;
+}
+
+/* log-style ISO dates */
+[data-look="solarized"] .news time {
+  font-size: 0;
+}
+
+[data-look="solarized"] .news time::before {
+  content: "[" attr(datetime) "]";
+  color: var(--sz-yellow);
+  font-size: var(--sz-size);
+}
+
+[data-look="solarized"] .news p {
+  margin: 0;
+}
+
+[data-look="solarized"] .news-toggle {
+  margin-top: 10px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--sz-base2);
+  cursor: pointer;
+  font: inherit;
+}
+
+[data-look="solarized"] .news-toggle::before {
+  content: "$ ";
+  color: var(--sz-base1);
+}
+
+[data-look="solarized"] .news-toggle:hover {
+  background: var(--sz-base02);
+}
+
+[data-look="solarized"] .pub-year h3 {
+  margin: 14px 0 4px;
+  color: var(--sz-violet);
+  font-size: 1em;
+  font-weight: 700;
+}
+
+[data-look="solarized"] .pub-year h3::before {
+  content: "papers/";
+}
+
+[data-look="solarized"] .pub-year h3::after {
+  content: "/";
+}
+
+[data-look="solarized"] .pubs {
+  margin: 0;
+  padding: 0 0 0 2ch;
+  border-left: 1px solid var(--sz-base02);
+  list-style: none;
+}
+
+[data-look="solarized"] .pub {
+  margin: 0 0 10px;
+}
+
+[data-look="solarized"] .pub-authors,
+[data-look="solarized"] .pub-venue {
+  display: block;
+}
+
+[data-look="solarized"] .pub-authors strong {
+  color: var(--sz-base2);
+  font-weight: 400;
+}
+
+[data-look="solarized"] .pub-venue {
+  color: var(--sz-green);
+}
+
+[data-look="solarized"] .pub-note {
+  margin-left: 1ch;
+  color: var(--sz-magenta);
+  font-style: normal;
+}
+
+[data-look="solarized"] .pub-note::before {
+  content: "[";
+}
+
+[data-look="solarized"] .pub-note::after {
+  content: "]";
+}
+
+[data-look="solarized"] .colophon p {
+  margin: 0;
+}
+
+[data-look="solarized"] .colophon-links a::before {
+  content: "→ ";
+}
+
+/* tmux status line ------------------------------------------------------------ */
+
+[data-look="solarized"] .themes {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+  flex-wrap: nowrap;
+  align-items: center;
+  height: 26px;
+  overflow-x: auto;
+  background: var(--sz-base02);
+  color: var(--sz-base0);
+  font: 13px/26px var(--sz-mono);
+  white-space: nowrap;
+  counter-reset: window -1;
+}
+
+[data-look="solarized"] .themes-label {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+}
+
+[data-look="solarized"] .sz-session {
+  margin-right: 1ch;
+  padding: 0 1ch;
+  background: var(--sz-green);
+  color: var(--sz-base03);
+  font-weight: 700;
+}
+
+[data-look="solarized"] .themes-modes,
+[data-look="solarized"] .themes-looks {
+  display: inline-flex;
+}
+
+[data-look="solarized"] .themes button {
+  padding: 0 1ch;
+  border: 0;
+  background: none;
+  color: var(--sz-base0);
+  cursor: pointer;
+  font: inherit;
+  counter-increment: window;
+}
+
+[data-look="solarized"] .themes button::before {
+  content: counter(window) ":";
+}
+
+[data-look="solarized"] .themes button:hover {
+  color: var(--sz-base2);
+}
+
+[data-look="solarized"] .themes button[aria-pressed="true"] {
+  color: var(--sz-orange);
+  font-weight: 700;
+}
+
+[data-look="solarized"] .themes button[aria-pressed="true"]::after {
+  content: "*";
+}
+
+[data-look="solarized"] .sz-status-right {
+  margin-left: auto;
+  padding: 0 1ch;
+  color: var(--sz-base1);
+}
+
+@keyframes sz-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-look="solarized"] .sz-cursor {
+    animation: none;
+  }
+}
+
+@media (max-width: 640px) {
+  [data-look="solarized"] body {
+    font-size: 13px;
+  }
+
+  [data-look="solarized"] {
+    --sz-size: 13px;
+  }
+
+  [data-look="solarized"] .page {
+    padding: 18px 14px 56px;
+  }
+
+  [data-look="solarized"] .masthead {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  [data-look="solarized"] .sz-ascii {
+    margin-bottom: 14px;
+    font-size: 7px;
+  }
+
+  [data-look="solarized"] .news li {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
