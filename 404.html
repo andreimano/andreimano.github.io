@@ -1,34 +1,44 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="default" data-look="default">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Page not found - Andrei Manolache</title>
+    <title>Page not found · Andrei Manolache</title>
     <meta name="description" content="The requested page could not be found.">
+    <meta name="color-scheme" content="light dark">
+    <link rel="icon" href="/favicon.ico" sizes="32x32">
     <link rel="icon" href="/resources/img/favicon.svg" type="image/svg+xml">
-    <link rel="stylesheet" href="/resources/css/styles.css">
+    <link rel="apple-touch-icon" href="/resources/img/apple-touch-icon.png">
+    <script>
+      // The 404 page always uses the default look, but keeps a saved light/dark choice.
+      (function () {
+        var theme = null;
+        try { theme = localStorage.getItem("andrei-theme"); } catch (error) {}
+        if (theme === "defaultLight" || theme === "defaultDark") {
+          document.documentElement.setAttribute("data-theme", theme);
+        }
+      })();
+    </script>
+    <link rel="stylesheet" href="/resources/css/base.css">
   </head>
-  <body data-theme="default">
-    <main class="site-shell not-found-page">
-      <section class="window not-found-window">
-        <div class="window-title">lost-page.log</div>
-        <div class="window-body prose not-found-body">
-          <p class="error-code">404</p>
-          <h1>this page wandered off</h1>
-          <p>
-            The route you asked for is not in the current directory. It may have
-            been renamed during the static-site cleanup, or it may just be doing
-            very tiny unsupervised exploration.
-          </p>
-          <div class="lost-terminal" aria-label="Navigation options">
-            <span>$ cd /</span>
-            <a href="/">open homepage</a>
-            <a href="/#publications">jump to publications</a>
-            <a href="/#news">read recent news</a>
-          </div>
-        </div>
-      </section>
-    </main>
-    <script src="/resources/js/theme-picker.js"></script>
+  <body>
+    <div class="page">
+      <main class="not-found" id="main">
+        <p class="not-found-code">404</p>
+        <h1>This page wandered off.</h1>
+        <p>
+          The route you asked for is not in the current directory. It may have been renamed during a
+          cleanup, or it may just be doing very tiny unsupervised exploration.
+        </p>
+        <ul class="not-found-links">
+          <li><a href="/">Homepage</a></li>
+          <li><a href="/#publications">Publications</a></li>
+          <li><a href="/#news">News</a></li>
+        </ul>
+      </main>
+      <footer class="colophon">
+        <p class="disclaimer">This website was 100% vibe-coded. The research wasn't.</p>
+      </footer>
+    </div>
   </body>
 </html>

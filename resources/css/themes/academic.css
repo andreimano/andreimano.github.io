@@ -1,0 +1,444 @@
+/* ==========================================================================
+   serious academic: the homepage as a LaTeX article, open in a PDF viewer.
+   Toolbar bits, \today, the figure caption and the page number come from
+   js/themes/academic.js.
+   ========================================================================== */
+
+@font-face {
+  font-family: "Latin Modern";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../../fonts/latin-modern-regular.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Latin Modern";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../../fonts/latin-modern-italic.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Latin Modern";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../../fonts/latin-modern-bold.woff2") format("woff2");
+}
+
+@font-face {
+  font-family: "Latin Modern";
+  font-style: italic;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../../fonts/latin-modern-bold-italic.woff2") format("woff2");
+}
+
+[data-look="seriousAcademic"] {
+  --la-serif: "Latin Modern", "Computer Modern Serif", "CMU Serif", Georgia, serif;
+  --la-ui: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  color-scheme: light;
+  background: #525659;
+}
+
+[data-look="seriousAcademic"] body {
+  color: #000;
+  font: 16.5px/1.32 var(--la-serif);
+  font-kerning: normal;
+  counter-reset: section pubyear pub;
+}
+
+[data-look="seriousAcademic"] ::selection {
+  background: #b4d5fe;
+}
+
+/* hyperref's link boxes: cyan for URLs, red for internal links. */
+[data-look="seriousAcademic"] a {
+  color: inherit;
+  text-decoration: none;
+  outline: 1px solid #00ffff;
+  outline-offset: 0;
+}
+
+[data-look="seriousAcademic"] a[href^="#"] {
+  outline-color: #ff0000;
+}
+
+[data-look="seriousAcademic"] a:hover {
+  background: rgba(0, 255, 255, 0.18);
+}
+
+[data-look="seriousAcademic"] a:focus-visible {
+  outline: 2px solid #1a73e8;
+}
+
+/* The PDF viewer toolbar is the theme picker. */
+[data-look="seriousAcademic"] .themes {
+  position: fixed;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 10;
+  flex-wrap: nowrap;
+  align-items: center;
+  gap: 4px 14px;
+  height: 48px;
+  padding: 0 16px;
+  overflow-x: auto;
+  white-space: nowrap;
+  background: #323639;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45);
+  color: #f1f1f1;
+  font: 13px var(--la-ui);
+}
+
+[data-look="seriousAcademic"] .la-file {
+  margin-right: auto;
+  font-weight: 500;
+}
+
+[data-look="seriousAcademic"] .la-pages,
+[data-look="seriousAcademic"] .la-zoom {
+  padding: 3px 8px;
+  border-radius: 2px;
+  background: #191b1c;
+  color: #ddd;
+  font-variant-numeric: tabular-nums;
+}
+
+[data-look="seriousAcademic"] .themes-label {
+  color: #aaa;
+}
+
+[data-look="seriousAcademic"] .themes-modes,
+[data-look="seriousAcademic"] .themes-looks {
+  display: inline-flex;
+  gap: 2px;
+}
+
+[data-look="seriousAcademic"] .themes button {
+  padding: 5px 8px;
+  border: 0;
+  border-radius: 14px;
+  background: none;
+  color: #f1f1f1;
+  cursor: pointer;
+  font: 13px var(--la-ui);
+}
+
+[data-look="seriousAcademic"] .themes button:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+[data-look="seriousAcademic"] .themes button[aria-pressed="true"] {
+  background: rgba(138, 180, 248, 0.24);
+  color: #8ab4f8;
+}
+
+/* The page ----------------------------------------------------------------- */
+
+[data-look="seriousAcademic"] .page {
+  position: relative;
+  max-width: 816px;
+  min-height: 1056px;
+  margin: 76px auto 40px;
+  padding: 88px 104px 80px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.45);
+}
+
+/* Title block (\maketitle) */
+[data-look="seriousAcademic"] .masthead {
+  display: grid;
+  justify-items: center;
+  margin-bottom: 30px;
+  text-align: center;
+}
+
+[data-look="seriousAcademic"] .intro {
+  display: contents;
+}
+
+[data-look="seriousAcademic"] .name {
+  order: 1;
+  margin: 0 0 18px;
+  font-size: 1.728em;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+/* \thanks{…}: the footnote marker for the vibe-coding disclaimer */
+[data-look="seriousAcademic"] .name::after {
+  content: "∗";
+  position: relative;
+  top: -0.6em;
+  font-size: 0.55em;
+}
+
+[data-look="seriousAcademic"] .role {
+  order: 2;
+  margin: 0;
+  font-size: 1.1em;
+}
+
+[data-look="seriousAcademic"] .sep {
+  padding: 0 0.5em;
+}
+
+[data-look="seriousAcademic"] .contact {
+  order: 3;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2px 14px;
+  margin: 8px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.95em;
+}
+
+[data-look="seriousAcademic"] .la-date {
+  order: 4;
+  margin: 14px 0 0;
+  font-size: 1.2em;
+}
+
+[data-look="seriousAcademic"] .tagline {
+  order: 5;
+  max-width: 34em;
+  margin: 30px 0 0;
+  font-size: 0.91em;
+  line-height: 1.3;
+  text-align: justify;
+  hyphens: auto;
+}
+
+[data-look="seriousAcademic"] .tagline::before {
+  content: "Abstract";
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 700;
+  text-align: center;
+}
+
+[data-look="seriousAcademic"] .portrait {
+  order: 6;
+  width: 150px;
+  margin-top: 26px;
+}
+
+[data-look="seriousAcademic"] .la-caption {
+  order: 7;
+  margin: 8px 0 0;
+  font-size: 0.91em;
+}
+
+/* Sections ------------------------------------------------------------------ */
+
+[data-look="seriousAcademic"] .section h2 {
+  margin: 28px 0 12px;
+  font-size: 1.44em;
+  font-weight: 700;
+  line-height: 1.2;
+  counter-increment: section;
+}
+
+[data-look="seriousAcademic"] .section h2::before {
+  content: counter(section);
+  display: inline-block;
+  min-width: 1.5em;
+}
+
+[data-look="seriousAcademic"] .section-note {
+  margin: -6px 0 10px;
+  font-size: 0.91em;
+}
+
+[data-look="seriousAcademic"] .prose p,
+[data-look="seriousAcademic"] .news p {
+  margin: 0;
+  text-align: justify;
+  hyphens: auto;
+}
+
+[data-look="seriousAcademic"] .prose p + p {
+  text-indent: 1.5em;
+}
+
+/* News: a description list */
+[data-look="seriousAcademic"] .news {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+[data-look="seriousAcademic"] .news li {
+  margin: 0 0 4px;
+  padding-left: 1.5em;
+  text-indent: -1.5em;
+  text-align: justify;
+}
+
+[data-look="seriousAcademic"] .news time {
+  font-weight: 700;
+}
+
+[data-look="seriousAcademic"] .news time::after {
+  content: "\2002";
+}
+
+[data-look="seriousAcademic"] .news p {
+  display: inline;
+}
+
+[data-look="seriousAcademic"] .news-toggle {
+  margin: 4px 0 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font: italic 1em var(--la-serif);
+  outline: 1px solid #ff0000;
+}
+
+/* Publications: numbered like a bibliography */
+[data-look="seriousAcademic"] .pub-year h3 {
+  margin: 18px 0 8px;
+  font-size: 1.2em;
+  font-weight: 700;
+  counter-increment: pubyear;
+}
+
+[data-look="seriousAcademic"] .pub-year h3::before {
+  content: counter(section) "." counter(pubyear);
+  display: inline-block;
+  min-width: 2.3em;
+}
+
+[data-look="seriousAcademic"] .pubs {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+[data-look="seriousAcademic"] .pub {
+  position: relative;
+  margin: 0 0 6px;
+  padding-left: 2.6em;
+  text-align: justify;
+  hyphens: auto;
+  counter-increment: pub;
+}
+
+[data-look="seriousAcademic"] .pub::before {
+  content: "[" counter(pub) "]";
+  position: absolute;
+  left: 0;
+}
+
+[data-look="seriousAcademic"] .pub-title::after,
+[data-look="seriousAcademic"] .pub-authors::after {
+  content: ".";
+}
+
+[data-look="seriousAcademic"] .pub-authors::before {
+  content: " ";
+}
+
+[data-look="seriousAcademic"] .pub-authors strong {
+  font-weight: 400;
+}
+
+[data-look="seriousAcademic"] .pub-venue::before {
+  content: " In ";
+}
+
+[data-look="seriousAcademic"] .pub-venue::after {
+  content: ".";
+}
+
+[data-look="seriousAcademic"] .venue-short,
+[data-look="seriousAcademic"] .venue-long {
+  font-style: italic;
+}
+
+[data-look="seriousAcademic"] .pub-venue:has(.venue-long) .venue-short {
+  display: none;
+}
+
+[data-look="seriousAcademic"] .venue-long {
+  display: inline;
+}
+
+[data-look="seriousAcademic"] .pub-note {
+  font-style: normal;
+}
+
+[data-look="seriousAcademic"] .pub-note::before {
+  content: "(";
+}
+
+[data-look="seriousAcademic"] .pub-note::after {
+  content: ")";
+}
+
+/* Footnote + page number ---------------------------------------------------------- */
+
+[data-look="seriousAcademic"] .colophon {
+  margin-top: 40px;
+  font-size: 0.82em;
+}
+
+[data-look="seriousAcademic"] .colophon::before {
+  content: "";
+  display: block;
+  width: 36%;
+  margin-bottom: 6px;
+  border-top: 0.5px solid #000;
+}
+
+[data-look="seriousAcademic"] .disclaimer {
+  margin: 0;
+}
+
+[data-look="seriousAcademic"] .disclaimer::before {
+  content: "∗";
+  position: relative;
+  top: -0.45em;
+  margin-right: 2px;
+  font-size: 0.75em;
+}
+
+[data-look="seriousAcademic"] .colophon-links {
+  margin: 2px 0 0;
+}
+
+[data-look="seriousAcademic"] .la-page-number {
+  position: absolute;
+  right: 0;
+  bottom: 34px;
+  left: 0;
+  margin: 0;
+  text-align: center;
+}
+
+@media (max-width: 860px) {
+  [data-look="seriousAcademic"] {
+    background: #fff;
+  }
+
+  [data-look="seriousAcademic"] .page {
+    min-height: 0;
+    margin: 48px 0 0;
+    padding: 36px 22px 70px;
+    box-shadow: none;
+  }
+
+  [data-look="seriousAcademic"] .la-pages,
+  [data-look="seriousAcademic"] .la-zoom {
+    display: none;
+  }
+}
