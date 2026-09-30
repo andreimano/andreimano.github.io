@@ -1,8 +1,9 @@
 // "peak 2000s": a GeoCities-era homepage. Adds the marquee, WordArt title,
-// sidebar widgets (MIDI player, hit counter, guestbook, webring, 88×31
-// buttons), NEW! badges, a sparkle cursor trail and optional retro sounds.
-// Sound is off until the visitor presses play or turns it on.
+// sidebar widgets (MIDI jukebox, hit counter, guestbook, webring, 88×31
+// buttons), the arcade, NEW! badges, a sparkle cursor trail and optional
+// retro sounds. Sound is off until the visitor presses play or turns it on.
 
+import { createArcade } from "./peak2000-arcade.js";
 import { createAudio } from "./peak2000-audio.js";
 import { $, createExtras, h, newsItems } from "./dom.js";
 
@@ -55,7 +56,7 @@ export function mount(site) {
     .slice(0, 2)
     .map(({ text }) => text.replace(/[.!]*$/, "!!!"))
     .join("   ★   ");
-  const marqueeText = `★ Welcome to Andrei's homepage on the World Wide Web!!! ★ Latest news: ${latest} ★ Now 100% SO(3)-equivariant ★ Don't forget to sign my guestbook!!! ★`;
+  const marqueeText = `★ Welcome to Andrei's homepage on the World Wide Web!!! ★ Latest news: ${latest} ★ NEW!!! Play FREE games in the Arcade (nobody has ever beaten the final boss of Loss Landscape 3D) ★ 5 tracks in the MIDI jukebox ★ Now 100% SO(3)-equivariant ★ Don't forget to sign my guestbook!!! ★`;
   const marquee = extras.add(
     h("div", { class: "p2k-marquee", "aria-hidden": "true" },
       h("div", { class: "p2k-marquee-track" }, h("span", {}, marqueeText), h("span", {}, marqueeText))),
@@ -68,9 +69,15 @@ export function mount(site) {
     extras.add(h("div", { class: "p2k-wordart", "aria-hidden": "true" }, wordArt(name.textContent))),
   );
 
+  // The photo, as if it had been taken with a 2005 flip phone.
+  const originalPhoto = portrait ? portrait.getAttribute("src") : null;
   if (portrait) {
+    portrait.setAttribute("src", "resources/img/portrait-flip-phone.jpg");
     portrait.after(
-      extras.add(h("p", { class: "p2k-caption", "aria-hidden": "true" }, "▲ this is me!! ▲")),
+      extras.add(
+        h("p", { class: "p2k-caption", "aria-hidden": "true" },
+          "▲ this is me!! ▲", h("br"), h("small", {}, "(pic from my flip phone, 0.3 megapixels!!)")),
+      ),
       extras.add(h("p", { class: "p2k-online" }, h("span", { class: "p2k-dot", "aria-hidden": "true" }), "Online Now!")),
     );
   }
@@ -108,11 +115,13 @@ export function mount(site) {
             ["#top", "Home"],
             ["#about", "About Me"],
             ["#news", "What's New?!"],
+            ["#arcade", "Arcade!!!", true],
             ["#publications", "My Papers"],
             ["resources/files/Manolache_Andrei_CV.pdf", "My CV"],
             site.email && [`mailto:${site.email}`, "E-mail Me"],
-          ].filter(Boolean).map(([href, label]) => h("li", {}, h("a", { href }, label))))),
-      box("♫ Now Playing", player.node),
+          ].filter(Boolean).map(([href, label, fresh]) =>
+            h("li", {}, h("a", { href }, label, fresh && h("span", { class: "p2k-new", "aria-hidden": "true" }, "NEW!")))))),
+      box("♫ MIDI Jukebox", player.node),
       box("Hit Counter",
         h("p", {}, "You are visitor #"),
         h("p", { class: "p2k-counter", role: "img", "aria-label": `visitor number ${Number(count)}` },
@@ -136,6 +145,12 @@ export function mount(site) {
     ),
   );
   masthead.after(side);
+
+  // The arcade lives in the main column, right after the news.
+  const arcade = createArcade({ sfx: player.audio.sfx, reducedMotion: site.reducedMotion() });
+  const newsSection = document.getElementById("news");
+  if (newsSection) newsSection.after(extras.add(arcade.node));
+  else $("main").append(extras.add(arcade.node));
 
   // Content decorations ---------------------------------------------------------
   news.slice(0, 3).forEach(({ time }) => time.after(extras.add(h("span", { class: "p2k-new" }, "NEW!"))));
@@ -198,29 +213,35 @@ export function mount(site) {
   });
   extras.on(document, "pointerover", (event) => {
     if (!(event.target instanceof Element)) return;
-    const target = event.target.closest(".p2k-nav a, .themes button, .p2k-btn, .p2k-badge, .contact a");
+    const target = event.target.closest(".p2k-nav a, .themes button, .p2k-btn, .p2k-badge, .p2k-cart, .p2k-track, .contact a");
     if (target && !target.contains(event.relatedTarget)) player.audio.sfx.blip();
   });
 
   return () => {
+    if (portrait && originalPhoto) portrait.setAttribute("src", originalPhoto);
+    arcade.destroy();
     player.destroy();
     if (site.news) site.news.setLabels(null);
     extras.cleanup();
   };
 }
 
+const clockText = (seconds) => `${Math.floor(seconds / 60)}:${pad(Math.floor(seconds % 60))}`;
+
 function createPlayer() {
   let dialing = false;
   let frame = 0;
+  let shownTrack = -1;
 
-  const track = "01. andrei_homepage.mid  ***  128 kbps  ***  22 kHz  ***  ";
-  const title = h("span", { class: "p2k-lcd-title" }, h("span", {}, track), h("span", {}, track));
+  const title = h("span", { class: "p2k-lcd-title" }, h("span", {}), h("span", {}));
   const status = h("span", { class: "p2k-lcd-status" }, "SOUND OFF");
   const clock = h("span", { class: "p2k-lcd-time" }, "00:00");
   const canvas = h("canvas", { class: "p2k-viz", width: 176, height: 30, "aria-hidden": "true" });
 
+  const previous = h("button", { type: "button", class: "p2k-btn", title: "Previous track", "aria-label": "Previous track" }, "⏮\uFE0E");
   const play = h("button", { type: "button", class: "p2k-btn", title: "Play", "aria-label": "Play background music" }, "▶");
   const stop = h("button", { type: "button", class: "p2k-btn", title: "Stop", "aria-label": "Stop music" }, "■");
+  const next = h("button", { type: "button", class: "p2k-btn", title: "Next track", "aria-label": "Next track" }, "⏭\uFE0E");
   const sound = h("button", { type: "button", class: "p2k-btn p2k-sound", "aria-pressed": "false" },
     h("span", { class: "p2k-sound-icon", "aria-hidden": "true" }, "🔇"), " sound");
   const volume = h("input", { type: "range", min: "0", max: "100", value: "60", "aria-label": "Volume" });
@@ -228,7 +249,25 @@ function createPlayer() {
 
   const audio = createAudio({ onChange: render });
 
+  const items = audio.tracks.map((track, index) =>
+    h("li", {},
+      h("button", { type: "button", class: "p2k-track", onclick: () => audio.play(index) },
+        h("span", { class: "p2k-track-title" }, `${index + 1}. ${track.title}`),
+        h("span", { class: "p2k-track-time" }, clockText(track.duration)))));
+
   function render(state = audio.state) {
+    if (state.track !== shownTrack) {
+      shownTrack = state.track;
+      const text = `${pad(state.track + 1)}. ${audio.tracks[state.track].title}  ***  128 kbps  ***  22 kHz  ***  `;
+      [...title.children].forEach((span) => {
+        span.textContent = text;
+      });
+      items.forEach((item, index) => {
+        item.classList.toggle("is-current", index === state.track);
+        if (index === state.track) item.firstChild.setAttribute("aria-current", "true");
+        else item.firstChild.removeAttribute("aria-current");
+      });
+    }
     sound.setAttribute("aria-pressed", String(!state.muted));
     sound.firstChild.textContent = state.muted ? "🔇" : "🔊";
     play.setAttribute("aria-pressed", String(state.playing));
@@ -264,8 +303,10 @@ function createPlayer() {
     if (playing) frame = requestAnimationFrame(draw);
   }
 
+  previous.addEventListener("click", () => audio.previous());
   play.addEventListener("click", () => audio.play());
   stop.addEventListener("click", () => audio.stop());
+  next.addEventListener("click", () => audio.next());
   sound.addEventListener("click", () => audio.setMuted(!audio.state.muted));
   volume.addEventListener("input", () => audio.setVolume(Number(volume.value) / 100));
   dial.addEventListener("click", () => {
@@ -291,8 +332,9 @@ function createPlayer() {
       h("div", { class: "p2k-lcd-marquee" }, title),
       h("div", { class: "p2k-lcd-row" }, status, clock),
       canvas),
-    h("div", { class: "p2k-controls" }, play, stop, sound),
-    h("label", { class: "p2k-volume" }, h("span", {}, "vol"), volume),
+    h("div", { class: "p2k-controls" }, previous, play, stop, next),
+    h("div", { class: "p2k-volume-row" }, h("label", { class: "p2k-volume" }, h("span", {}, "vol"), volume), sound),
+    h("ol", { class: "p2k-playlist", "aria-label": "Playlist" }, items),
     dial,
     h("p", { class: "p2k-small" }, "sound is off until you press play"));
 

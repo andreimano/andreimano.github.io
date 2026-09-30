@@ -211,6 +211,12 @@
   font-weight: bold;
 }
 
+[data-look="peak2000"] .p2k-caption small {
+  color: #ffb14b;
+  font-size: 11px;
+  font-weight: normal;
+}
+
 [data-look="peak2000"] .p2k-online {
   grid-column: 1;
   grid-row: 3;
@@ -499,21 +505,73 @@
 }
 
 [data-look="peak2000"] .p2k-controls .p2k-btn {
-  min-width: 30px;
-  padding: 2px 6px;
+  flex: 1;
+  min-width: 0;
+  padding: 2px 4px;
 }
 
-[data-look="peak2000"] .p2k-sound {
-  margin-left: auto;
-}
-
-[data-look="peak2000"] .p2k-volume {
+[data-look="peak2000"] .p2k-volume-row {
   display: flex;
   align-items: center;
   gap: 6px;
   margin-top: 6px;
+}
+
+[data-look="peak2000"] .p2k-sound {
+  flex: none;
+  padding: 2px 6px;
+}
+
+[data-look="peak2000"] .p2k-volume {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
   color: #ccc;
   font: 11px var(--p2k-ui);
+}
+
+/* Winamp-style playlist */
+[data-look="peak2000"] .p2k-playlist {
+  margin: 6px 0 0;
+  padding: 2px;
+  border: 2px inset #3a3a3a;
+  background: #000;
+  list-style: none;
+  font: 10px/1.35 var(--p2k-mono);
+}
+
+[data-look="peak2000"] .p2k-track {
+  display: flex;
+  justify-content: space-between;
+  gap: 6px;
+  width: 100%;
+  padding: 1px 3px;
+  border: 0;
+  background: none;
+  color: #4bff4b;
+  font: inherit;
+  text-align: left;
+}
+
+[data-look="peak2000"] .p2k-track:hover {
+  background: #0a3a0a;
+}
+
+[data-look="peak2000"] .is-current .p2k-track {
+  background: #0000c8;
+  color: #fff;
+}
+
+[data-look="peak2000"] .p2k-track-title {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+[data-look="peak2000"] .p2k-track-time {
+  flex: none;
 }
 
 [data-look="peak2000"] .p2k-volume input {
@@ -802,6 +860,209 @@
   content: "🔥 ";
 }
 
+/* Arcade ---------------------------------------------------------------------- */
+
+[data-look="peak2000"] .p2k-arcade-intro {
+  margin: 0 0 12px;
+  color: #fff35c;
+  font-weight: bold;
+  text-align: center;
+}
+
+[data-look="peak2000"] .p2k-carts {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  max-width: 492px;
+  margin: 0 auto 12px;
+}
+
+[data-look="peak2000"] .p2k-cart {
+  display: grid;
+  gap: 3px;
+  padding: 6px 6px 5px;
+  border: 0;
+  background: var(--p2k-silver);
+  box-shadow: var(--p2k-bevel);
+  color: #000;
+  font: 12px var(--p2k-ui);
+  text-align: center;
+}
+
+[data-look="peak2000"] .p2k-cart:hover {
+  background: #fff35c;
+}
+
+[data-look="peak2000"] .p2k-cart[aria-pressed="true"] {
+  box-shadow: var(--p2k-bevel-in);
+  background: repeating-conic-gradient(#c0c0c0 0 25%, #e6e6e6 0 50%) 0 0 / 2px 2px;
+}
+
+[data-look="peak2000"] .p2k-cart-thumb {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  border: 2px inset #808080;
+  background: #000;
+}
+
+[data-look="peak2000"] .p2k-cart b {
+  font-size: 12px;
+}
+
+[data-look="peak2000"] .p2k-cart span {
+  overflow: hidden;
+  color: #444;
+  font-size: 10px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* The game "embed": a Win98 window around the canvas */
+[data-look="peak2000"] .p2k-flash {
+  max-width: 492px;
+  margin: 0 auto;
+  padding: 3px;
+  background: #d4d0c8;
+  box-shadow: var(--p2k-bevel);
+}
+
+[data-look="peak2000"] .p2k-flash-bar {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 2px 6px;
+  background: linear-gradient(90deg, #000080, #1084d0);
+  color: #fff;
+  font: bold 11px var(--p2k-ui);
+}
+
+[data-look="peak2000"] .p2k-stage {
+  position: relative;
+  margin-top: 3px;
+  border: 2px inset #808080;
+  background: #000;
+}
+
+[data-look="peak2000"] .p2k-game {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+[data-look="peak2000"] .p2k-game:focus {
+  outline: none;
+}
+
+[data-look="peak2000"] .p2k-game:focus-visible {
+  outline: 2px dotted #fff35c;
+  outline-offset: -5px;
+}
+
+[data-look="peak2000"] .p2k-flash[data-game="whack"] .p2k-game {
+  cursor: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'%3E%3Cpath d='M13 12l14 14-3 3-14-14z' fill='%23a0662b' stroke='%23000' stroke-width='1.5'/%3E%3Cpath d='M3 9l8-8 9 9-8 8z' fill='%23c0c0c0' stroke='%23000' stroke-width='1.5'/%3E%3Cpath d='M5 9l6-6' stroke='%23fff' stroke-width='1.5'/%3E%3C/svg%3E") 7 7, pointer;
+}
+
+/* A white Flash-style preloader */
+[data-look="peak2000"] .p2k-preloader {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 8px;
+  background: #fff;
+  color: #333;
+  font: bold 12px var(--p2k-ui);
+}
+
+[data-look="peak2000"] .p2k-preloader[hidden] {
+  display: none;
+}
+
+[data-look="peak2000"] .p2k-preloader-file {
+  color: #888;
+  font-weight: normal;
+}
+
+[data-look="peak2000"] .p2k-progress {
+  width: 200px;
+  height: 12px;
+  border: 1px solid #333;
+  background: #eee;
+}
+
+[data-look="peak2000"] .p2k-progress i {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: linear-gradient(90deg, #ff2bd6, #5cf8ff);
+}
+
+[data-look="peak2000"] .p2k-dpad {
+  display: grid;
+  justify-content: center;
+  gap: 4px;
+  padding: 6px 0 3px;
+}
+
+[data-look="peak2000"] .p2k-dpad[data-layout="snake"] {
+  grid-template-areas: ". up ." "left down right";
+  grid-template-columns: repeat(3, 52px);
+}
+
+[data-look="peak2000"] .p2k-dpad[data-layout="fps"] {
+  grid-template-areas: "left up right fire" "left down right fire";
+  grid-template-columns: repeat(3, 52px) 96px;
+}
+
+[data-look="peak2000"] .p2k-dpad[hidden] {
+  display: none;
+}
+
+[data-look="peak2000"] .p2k-dpad .p2k-btn {
+  min-height: 34px;
+  font-size: 14px;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+[data-look="peak2000"] .p2k-pad-up { grid-area: up; }
+[data-look="peak2000"] .p2k-pad-left { grid-area: left; }
+[data-look="peak2000"] .p2k-pad-down { grid-area: down; }
+[data-look="peak2000"] .p2k-pad-right { grid-area: right; }
+
+[data-look="peak2000"] .p2k-dpad .p2k-pad-fire {
+  grid-area: fire;
+  background: #ffe14b;
+  font-weight: bold;
+}
+
+[data-look="peak2000"] .p2k-arcade-help,
+[data-look="peak2000"] .p2k-arcade-scores {
+  max-width: 492px;
+  margin: 8px auto 0;
+  color: #d8d8ff;
+  font: 12px/1.45 var(--p2k-ui);
+  text-align: center;
+}
+
+[data-look="peak2000"] .p2k-arcade-scores b {
+  color: #fff35c;
+}
+
+[data-look="peak2000"] .p2k-nav .p2k-new {
+  width: 38px;
+  height: 18px;
+  margin-left: 6px;
+  font-size: 9px;
+  vertical-align: -4px;
+}
+
 /* Footer -------------------------------------------------------------------- */
 
 [data-look="peak2000"] .colophon {
@@ -953,6 +1214,12 @@
   [data-look="peak2000"] .p2k-side {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  }
+}
+
+@media (max-width: 540px) {
+  [data-look="peak2000"] .p2k-carts {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
