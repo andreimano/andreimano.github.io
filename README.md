@@ -12,9 +12,18 @@ Static personal website: plain HTML, CSS, and JavaScript, no build step.
 - `resources/js/site.js` - theme switching, the collapsible news list, and loading of theme extras.
 - `resources/js/themes/*.js` - optional per-theme decorations (widgets, sidebars, sounds…).
   Each exports `mount(site)` and returns a cleanup function; anything it adds is marked `data-extra`.
-- `resources/js/themes/peak2000-audio.js` - the synthesized MIDI-style song and sound effects
+- `resources/js/themes/peak2000-audio.js` - the synthesized MIDI jukebox and sound effects
   (Web Audio, no audio files). Sound is off until a visitor presses play.
+- `resources/js/themes/peak2000-songs.js` - the jukebox's songs, written as notes and chords
+  (all original). Add a track by appending an entry.
+- `resources/js/themes/peak2000-arcade.js` - the peak 2000s arcade: Deadline Copter, Citation Snake
+  and Whack-a-Reviewer, drawn on a canvas. High scores stay in the visitor's browser.
+- `resources/js/themes/peak2000-fps.js` - Loss Landscape 3D, a small DOOM-style raycaster whose
+  final boss, the Pioneer, cannot be beaten (cheat codes: `idclev`, `iddqd`).
+- `resources/js/themes/peak2000-fps-art.js` - its wall textures, sprites and status-bar face, all drawn in code.
+- `resources/js/themes/peak2000-canvas.js` - drawing helpers shared by the arcade games.
 - `resources/img/portrait.jpg` - profile photo (480px, metadata stripped).
+- `resources/img/portrait-flip-phone.jpg` - the same photo "taken with a 2005 flip phone" (peak 2000s only).
 - `resources/img/favicon.svg` - favicon ("a." in Source Serif; adapts to light/dark).
 - `favicon.ico`, `resources/img/apple-touch-icon.png` - PNG-based fallbacks (Safari, iOS home screen).
 - `resources/fonts/` - self-hosted fonts and their licenses.

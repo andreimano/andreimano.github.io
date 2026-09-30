@@ -1,0 +1,112 @@
+// The jukebox for the "peak 2000s" theme. Every tune is an original loop
+// written for this site; peak2000-audio.js turns the notes into sound.
+//
+// melody: one string per bar, "NOTE:length" with the length in eighth notes
+//         ("R" is a rest, 0.5 is a sixteenth). Every bar adds up to 8.
+// chords: one symbol per bar; "F/G" means F for half a bar, then G.
+// style:  which band plays it (see STYLES in peak2000-audio.js).
+// loops:  how many times the loop plays before the jukebox moves on.
+
+export const SONGS = [
+  {
+    title: "andrei_homepage.mid",
+    style: "pop",
+    bpm: 126,
+    loops: 2,
+    chords: ["C", "Am", "F", "G", "C", "Am", "F/G", "C", "F", "G", "Em", "Am", "F", "G", "C", "C"],
+    melody: [
+      "G4:1 C5:1 E5:2 D5:1 C5:1 E5:2",
+      "A4:1 C5:1 E5:2 G5:2 E5:2",
+      "F5:2 E5:1 D5:1 C5:2 A4:2",
+      "B4:2 D5:2 G5:3 R:1",
+      "G4:1 C5:1 E5:2 D5:1 C5:1 G5:2",
+      "A5:2 G5:1 E5:1 C5:2 E5:2",
+      "F5:2 A5:2 G5:2 B4:2",
+      "C5:6 R:2",
+      "A5:1 A5:1 G5:1 F5:1 E5:2 F5:2",
+      "G5:3 D5:1 B4:2 D5:2",
+      "E5:1 G5:1 B5:2 A5:1 G5:1 E5:2",
+      "C6:3 B5:1 A5:4",
+      "A5:1 G5:1 F5:1 A5:1 C6:2 A5:2",
+      "B5:2 G5:2 D5:2 B4:2",
+      "C5:1 E5:1 G5:1 C6:1 E6:2 D6:2",
+      "C6:6 R:2",
+    ],
+  },
+  {
+    title: "backprop_trance_2003.mid",
+    style: "trance",
+    bpm: 138,
+    loops: 4,
+    chords: ["Am", "F", "C", "G", "Am", "F", "C", "E"],
+    melody: [
+      "A4:1 A4:0.5 C5:0.5 E5:1 A5:1 G5:1 E5:1 C5:1 D5:1",
+      "C5:1 C5:0.5 F5:0.5 A5:1 C6:1 A5:1 F5:1 A5:1 G5:1",
+      "G5:1 G5:0.5 E5:0.5 C5:1 E5:1 G5:1 C6:1 B5:1 G5:1",
+      "D5:1 D5:0.5 G5:0.5 B5:1 D6:1 B5:1 G5:1 D5:2",
+      "A4:1 A4:0.5 C5:0.5 E5:1 A5:1 G5:1 E5:1 C5:1 E5:1",
+      "F5:1 F5:0.5 A5:0.5 C6:1 F6:1 E6:1 C6:1 A5:1 C6:1",
+      "E6:1 D6:1 C6:1 B5:1 C6:1 G5:1 E5:1 G5:1",
+      "G#5:2 B5:2 E6:2 R:2",
+    ],
+  },
+  {
+    title: "gradient_descent_ballad.mid",
+    style: "ballad",
+    bpm: 76,
+    loops: 1,
+    chords: ["Am", "F", "C", "G", "Am", "F", "Dm", "E", "F", "G", "C", "Am", "F", "G", "Am", "Am"],
+    melody: [
+      "E5:2 A4:1 B4:1 C5:2 B4:1 A4:1",
+      "C5:3 D5:1 C5:2 A4:2",
+      "G4:2 C5:1 D5:1 E5:3 D5:1",
+      "D5:4 B4:2 G4:2",
+      "E5:2 A4:1 B4:1 C5:2 E5:1 F5:1",
+      "G5:3 F5:1 E5:2 C5:2",
+      "D5:2 F5:2 E5:2 D5:2",
+      "B4:4 G#4:2 R:2",
+      "A5:3 G5:1 F5:2 E5:2",
+      "D5:3 E5:1 F5:2 G5:2",
+      "E5:3 D5:1 C5:2 E5:2",
+      "A5:6 R:2",
+      "A5:2 G5:2 F5:2 A5:2",
+      "G5:2 F5:2 E5:2 D5:2",
+      "C5:2 B4:1 C5:1 E5:2 B4:2",
+      "A4:6 R:2",
+    ],
+  },
+  {
+    title: "elevator_to_the_poster_session.mid",
+    style: "bossa",
+    bpm: 104,
+    loops: 3,
+    chords: ["Cmaj7", "Am7", "Dm7", "G7", "Em7", "A7", "Dm7", "G7"],
+    melody: [
+      "E5:1.5 D5:0.5 E5:1 G5:2 R:1 B4:2",
+      "C5:1.5 B4:0.5 C5:1 E5:2 R:1 G4:2",
+      "F5:1.5 E5:0.5 F5:1 A5:2 G5:1 F5:2",
+      "E5:2 D5:2 B4:3 R:1",
+      "G5:1.5 F#5:0.5 G5:1 B5:2 R:1 D5:2",
+      "E5:1.5 C#5:0.5 E5:1 G5:2 R:1 A4:2",
+      "D5:1.5 E5:0.5 F5:1 A5:2 C6:1 A5:2",
+      "G5:4 F5:2 D5:2",
+    ],
+  },
+  {
+    title: "boss_fight_neurips_deadline.mid",
+    style: "chip",
+    bpm: 152,
+    loops: 4,
+    chords: ["Em", "C", "D", "B", "Em", "C", "Am", "B"],
+    melody: [
+      "E5:1 G5:1 B5:1 E6:1 D6:1 B5:1 G5:1 B5:1",
+      "C6:2 B5:1 A5:1 G5:2 E5:2",
+      "F#5:1 A5:1 D6:1 F#6:1 E6:1 D6:1 A5:1 F#5:1",
+      "D#6:3 B5:1 F#5:2 D#5:2",
+      "E5:1 E5:1 G5:1 E5:1 B5:2 A5:1 G5:1",
+      "C6:1 B5:1 C6:1 E6:1 G6:2 E6:2",
+      "A5:1 C6:1 E6:1 A6:1 G6:1 E6:1 C6:1 A5:1",
+      "B5:2 D#6:2 F#6:2 B6:2",
+    ],
+  },
+];
